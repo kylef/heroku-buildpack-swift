@@ -60,10 +60,11 @@ echo "-----> Copying dynamic libraries"
 mkdir -p $BUILD_DIR/.swift-lib
 SWIFT_PREFIX="$(swiftenv prefix)"
 cp $SWIFT_PREFIX/usr/lib/swift/linux/*.so $BUILD_DIR/.swift-lib
+cp $BUILD_DIR/.build/release/*.so $BUILD_DIR/.swift-lib
 
 echo "-----> Copying binaries to 'bin'"
 mkdir -p $BUILD_DIR/.swift-bin
-find $BUILD_DIR/.build/release -type f -perm /a+x -exec cp {} $BUILD_DIR/.swift-bin \;
+find $BUILD_DIR/.build/release ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR/.swift-bin \;
 
 # Setup application environment
 PROFILE_PATH="$BUILD_DIR/.profile.d/swift.sh"
@@ -72,6 +73,6 @@ set-env() {
   echo "export $1=$2" >> $PROFILE_PATH
 }
 set-env PATH '$HOME/.swift-bin:$PATH'
-set-env LD_LIBRARY_PATH '$HOME/.swift-bin:$HOME/.swift-lib'
+set-env LD_LIBRARY_PATH '$HOME/.swift-lib'
 
 source "$BIN_DIR/steps/hooks/post_compile"
