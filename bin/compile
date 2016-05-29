@@ -13,7 +13,11 @@ CACHE_DIR=$2
 DEFAULT_SWIFT_VERSION="DEVELOPMENT-SNAPSHOT-2016-04-12-a"
 CLANG_VERSION=3.7.0
 
-if [ -z "$SWIFT_BUILD_CONFIGURATION" ]; then
+# Reading the environment variables, these are set as flat files under the ENV_DIR
+# ENV_DIR is passed as the third argument
+if [ -f "$3/SWIFT_BUILD_CONFIGURATION" ]; then
+  SWIFT_BUILD_CONFIGURATION=`cat "$3/SWIFT_BUILD_CONFIGURATION"`
+else
   SWIFT_BUILD_CONFIGURATION="release"
 fi
 
