@@ -37,6 +37,6 @@ source "$BIN_DIR/steps/swift-install"
 mkdir -p $BUILD_DIR/.profile.d
 
 set-env PATH '$HOME/.swift-bin:$PATH'
-set-env LD_LIBRARY_PATH '$HOME/.swift-lib'
+set-env LD_LIBRARY_PATH '$LD_LIBRARY_PATH:$HOME/.swift-lib'
 
 source "$BIN_DIR/steps/hooks/post_compile"
