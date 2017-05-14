@@ -1,3 +1,4 @@
 cd $BUILD_DIR
-puts-step "Building Package"
-swift build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION"
+
+puts-step "Building Package ... this will take a while"
+swift build $SWIFT_BUILD_FLAGS -c release

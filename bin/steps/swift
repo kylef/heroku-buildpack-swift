@@ -1,8 +1,40 @@
 # Install Swift
 cd "$BUILD_DIR"
-SWIFT_PREFIX="$(swiftenv prefix || true)"
-if ! [ -d "$SWIFT_PREFIX" ]; then
-  VERSION="$(env DONT_CHECK=true swiftenv version-name)"
-  puts-step "Installing $VERSION"
-  swiftenv install
+
+echo "Swift 3 Heroku Installer";
+
+# Determine version
+VERSION="3.0.2"
+if [ -f "$BUILD_DIR/.swift-version" ]
+then
+    VERSION_FILE=".swift-version"
+    VERSION=`cat $VERSION_FILE | tr -d '[[:space:]]'`
+elif ! [ -z "$SWIFT_VERSION" ]
+then
+    VERSION="$SWIFT_VERSION"
 fi
+
+echo "🔢  Version: $VERSION";
+
+# Determine OS
+UBUNTU_RELEASE=`lsb_release -a 2>/dev/null`;
+if [[ $UBUNTU_RELEASE == *"15.10"* ]];
+then
+    OS="ubuntu1510";
+else
+    OS="ubuntu1404";
+fi
+echo "🖥  Operating System: $OS";
+
+
+echo "📦 Installing Swiftenv"
+git clone --depth 1 https://github.com/kylef/swiftenv.git ~/.swiftenv
+export SWIFTENV_ROOT="$HOME/.swiftenv"
+export PATH="$SWIFTENV_ROOT/bin:$SWIFTENV_ROOT/shims:$PATH"
+
+# echo "📚 Installing Dependencies"
+
+echo "🐦 Installing Swift";
+swiftenv install $VERSION;
+
+echo "✅  Done";
