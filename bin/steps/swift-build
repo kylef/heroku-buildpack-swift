@@ -1,3 +1,25 @@
 cd $BUILD_DIR
-puts-step "Building Package"
-swift build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION"
+
+puts-step "Installing toolbox"
+
+echo "Downloading...";
+git clone https://github.com/vapor/toolbox vapor-toolbox > /dev/null 2>&1;
+cd vapor-toolbox;
+
+TOOLBOXTAG=$(git describe --tags);
+git checkout $TOOLBOXTAG > /dev/null 2>&1;
+rm -rf .swift-version
+
+echo "Compiling...";
+swift build -Xswiftc -DNO_ANIMATION > /dev/null;
+
+echo "Installing...";
+mv .build/debug/Executable ../vapor;
+cd ..;
+rm -rf vapor-toolbox;
+
+puts-step "Fetching Packages ... this will take a while"
+swift package fetch
+
+puts-step "Building Package ... this will take a while"
+./vapor build $SWIFT_BUILD_FLAGS --configuration "$SWIFT_BUILD_CONFIGURATION" --verbose
