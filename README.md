@@ -17,7 +17,7 @@ $ heroku create --buildpack https://github.com/kylef/heroku-buildpack-swift.git
 
 $ git push heroku master
 remote: -----> Swift app detected
-remote: -----> Installing Swift 3.1.1
+remote: -----> Installing Swift 4.0.0
 remote: -----> Installing clang-3.7.0
 remote: -----> Building Package
 remote: -----> Copying binaries to 'bin'
@@ -49,7 +49,7 @@ in your repository:
 
 ```shell
 $ cat .swift-version
-3.1.1
+4.0.0
 ```
 
 The `.swift-version` file is completely compatible with
