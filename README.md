@@ -13,7 +13,7 @@ Example usage:
 $ ls
 Procfile Package.swift Sources
 
-$ heroku create --buildpack https://github.com/kylef/heroku-buildpack-swift.git
+$ heroku create --buildpack kyle/swift
 
 $ git push heroku master
 remote: -----> Swift app detected
@@ -26,7 +26,7 @@ remote: -----> Copying binaries to 'bin'
 You can also add it to upcoming builds of an existing application:
 
 ```shell
-$ heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift.git
+$ heroku buildpacks:set kyle/swift
 ```
 
 The buildpack will detect your app as Swift if it has a `Package.swift` file in
@@ -67,3 +67,11 @@ source code inside the following files in your repository:
 - `bin/post_compile`
 
 This is useful if you would need to install any other dependencies.
+
+## Using the latest buildpack code
+
+The `kyle/swift` buildpack from the [Heroku Registry](https://devcenter.heroku.com/articles/buildpack-registry) represents the latest stable version of the buildpack. If you'd like to use the latest buildpack code from this Github repository, you can set your buildpack to the Github URL:
+
+```sh-session
+$ heroku buildpacks:set https://github.com/kylef/heroku-buildpack-swift
+```
