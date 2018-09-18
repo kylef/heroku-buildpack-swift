@@ -1,10 +1,17 @@
 # Fetch swiftenv
-unset GIT_DIR
-git submodule update --init --recursive >/dev/null
 
-# Activate swiftenv
+unset GIT_DIR
 export SWIFTENV_ROOT="$CACHE_DIR/swiftenv"
 export PATH="$ROOT_DIR/swiftenv/bin:$PATH"
+
+if [ -d ".git" ]; then
+  git submodule update --init --recursive >/dev/null
+else
+  rm -rf $SWIFTENV_ROOT
+  git clone https://github.com/kylef/swiftenv.git $SWIFTENV_ROOT
+fi
+
+# Activate swiftenv
 eval "$(swiftenv init -)"
 
 if ! [ -f "$BUILD_DIR/.swift-version" ] && [ -z "$SWIFT_VERSION" ]; then
