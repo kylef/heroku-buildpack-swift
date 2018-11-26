@@ -1,5 +1,5 @@
 # Heroku 16 stack is missing `libatomic` from runtime lets copy over
 
-if [ "$STACK" = "heroku-16" ]; then
+if [ "$STACK" = "heroku-16" -o "$STACK" = "heroku-18" ]; then
   cp "/usr/lib/x86_64-linux-gnu/libatomic.so.1" "$BUILD_DIR/.swift-lib"
 fi
